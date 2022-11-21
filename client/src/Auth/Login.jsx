@@ -5,27 +5,30 @@ import { FcGoogle } from "react-icons/fc";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
 import auth from '../firebase.init';
+import useToken from '../hooks/useToken';
+
 import Loading from '../Shared/Loader';
 
 export default function Login() {
     const { theme } = useContext(AuthContext);
     const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
-    console.log(gUser);
+    console.log(`google user`, gUser);
     const [user] = useAuthState(auth);
+    console.log('after login', user);
+    const [token] = useToken(user);
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
-
-    console.log(user);
+    // console.log(user);
     useEffect(() => {
-        if (user?.email) {
+        if (token) {
             navigate(from, { replace: true });
             toast.success(`Welcome Back, ${auth?.currentUser?.displayName}`, {
                 autoClose: 4000,
             })
             navigate('/');
         }
-    }, [from, user?.email, navigate])
+    }, [from, token, navigate])
 
     if (user?.email) {
         navigate(from, { replace: true });

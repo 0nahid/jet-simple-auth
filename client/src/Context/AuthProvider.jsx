@@ -4,10 +4,11 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
     const [theme, setTheme] = useState(false);
+
     useEffect(() => {
         setTheme(JSON.parse(window.localStorage.getItem("theme") || "false"));
     }, [])
-
+    
     const handleThemeChange = () => {
         setTheme(!theme);
         window.localStorage.setItem("theme", JSON.stringify(!theme));
