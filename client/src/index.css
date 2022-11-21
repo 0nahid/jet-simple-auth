@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.heroLightPattern {
+  background: url("https://raw.githubusercontent.com/kiron0/github-user-details/main/src/Assets/bg-light.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.heroWhiteBg {
+  opacity: 1;
+  background-image: linear-gradient(#e5e5e5 1.5px, transparent 1.5px),
+    linear-gradient(to right, #e5e5e5 1.5px, #ffffff 1.5px);
+  background-size: 25px 25px;
+}
+
+.heroDarkBg {
+  opacity: 1;
+  background-image: linear-gradient(#e5e5e5 1.5px, transparent 1.5px),
+    linear-gradient(to right, #e5e5e5 1.5px, transparent 1.5px);
+  background-size: 25px 25px;
+}
+
+.heroDarkPattern {
+  background: url("https://raw.githubusercontent.com/kiron0/github-user-details/main/src/Assets/bg-dark.jpg");
+  opacity: 0.9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
