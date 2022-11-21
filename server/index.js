@@ -15,16 +15,21 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-const usersCollection = client.db("jwtServer").collection("users");
+const db = client.db("jwtServer")
+const usersCollection = db.collection("users");
 
 // verify admin
 
 
 // get all users
-app.get("/user", async (req, res) => {
+app.get("/users", async (req, res) => {
     try {
         const user = await usersCollection.find({}).toArray();
-        res.send(user)
+        res.send({
+            status: "success",
+            message: "Fetch all users",
+            data: user
+        })
     }
     catch (err) {
         console.log(err)
@@ -41,7 +46,11 @@ app.get("/user/:email", async (req, res) => {
     try {
         const email = req.params.email;
         const user = await usersCollection.findOne({ email });
-        res.send(user)
+        res.send({
+            status: "success",
+            message: "Fetch single user",
+            data: user
+        })
     }
     catch (err) {
         console.log(err)
@@ -61,4 +70,4 @@ app.all('*', (req, res) => res.send({
     message: `No route found!`,
 }))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`JWT simple Auth listening on port ${port}!`))
