@@ -4,16 +4,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import auth from "../firebase.init";
+import useAdmin from "../hooks/useAdmin";
 
 
 export default function Navbar() {
     const { handleThemeChange, theme } = useContext(AuthContext);
     const [user] = useAuthState(auth)
+    const [admin] = useAdmin(user);
     console.log('navbar', user?.auth?.currentUser?.photoURL);
     const Navmenu = (
         <>
             {
                 user && <Link to="/me" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0 mr-2">Me</button></Link>
+            }
+            {
+                admin && <Link to="/users" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0 mr-2">Users</button></Link>
             }
             {
                 !user ? <Link to="/login" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0">Login</button></Link> : <button className="btn btn-outline"

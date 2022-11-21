@@ -5,6 +5,7 @@ import Home from "../Home/Home";
 import Main from "../Main/Main";
 import Portfolio from "../Me/Me";
 import Page404 from "../Shared/Page404";
+import Users from "../Users/Users";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/me",
                 element: <RequireAuth><Portfolio /></RequireAuth>,
+            },
+            {
+                path: "/users",
+                element: <RequireAuth><Users /></RequireAuth>,
             }
         ]
     }

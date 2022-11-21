@@ -20,7 +20,6 @@ export default function App() {
         >
             {
                 loading ? <Loading /> : <>
-
                     <RouterProvider router={router}></RouterProvider>
                     <Toaster ></Toaster>
                 </>

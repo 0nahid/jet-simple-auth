@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ImFacebook2, ImGithub, ImLinkedin } from "react-icons/im";
 import { AuthContext } from "../Context/AuthProvider";
@@ -6,9 +7,25 @@ import auth from "../firebase.init";
 
 export default function Portfolio() {
     const { theme } = useContext(AuthContext);
-    const [user] = useAuthState(auth)
+    const [user] = useAuthState(auth);
+    const [getUser, setGetUser] = useState('');
+    // console.log('me page user', user.email);
     let darkFont = theme ? 'text-info' : 'text-black';
     let socialIconStyle = theme ? `h-7 w-7 hover:text-info` : "h-7 w-7 hover:text-secondary";
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/user/${user?.email}`, {
+            headers: {
+                "authorizaion": `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => {
+                console.log(`user`, res);
+                setGetUser(res?.data?.data);
+            })
+    }, [user?.email])
+
+    console.log(getUser);
 
     return (
         <>
@@ -26,8 +43,9 @@ export default function Portfolio() {
                             <h1 className="text-3xl font-bold">{user?.displayName}</h1>
                             <p className="text-sm font-bold">Full Stack Web developer</p>
                             <p className=""> <span className={darkFont + " underline mr-1"}>Email:</span>
-                                {user?.email} </p>
-                            <p>Uid:{user?.uid}</p>
+                                {getUser?.email} </p>
+                            <p>Uid:{getUser?.uid}</p>
+                            <span>_Id: {getUser?._id}</span>
                             <div className="flex mt-5 justify-center">
                                 <a href="https://www.facebook.com/hashtagnahid" target="_blank" rel="noreferrer" className="mr-5"><ImFacebook2 className={socialIconStyle} /></a>
                                 <a href="https://www.linkedin.com/in/nahid-hassan-bulbul/" target="_blank" rel="noreferrer" className="mr-5"><ImLinkedin className={socialIconStyle} /></a>
