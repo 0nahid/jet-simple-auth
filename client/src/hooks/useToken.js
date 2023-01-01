@@ -13,7 +13,7 @@ const useToken = (user) => {
             uid: uid
         }
         if (email && uid) {
-            axios.put(`http://localhost:5000/user/${email}`, currentUser)
+            axios.put(`${process.env.REACT_APP_SERVER_URL}/user/${email}`, currentUser)
                 .then(res => {
                     // console.log(res?.data?.data);
                     const accessToken = res?.data?.data;

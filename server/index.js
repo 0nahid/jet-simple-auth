@@ -10,15 +10,16 @@ app.use(cors())
 
 // Verify Token
 function verifyToken(req, res, next) {
-    const authorizaion = req.headers.authorizaion;
-    // console.log('authorizaion', authorizaion);
-    if (!authorizaion) {
+    // console.log('req.headers', req.headers);
+    const authorization = req.headers.authorization;
+    // console.log('authorization', authorization);
+    if (!authorization) {
         return res.status(401).send({
-            message: 'No valid Auth Headers',
+            message: 'You did not provide any token',
             status: 401
         })
     }
-    const token = authorizaion.split(" ")[1];
+    const token = authorization.split(" ")[1];
     // console.log(token);
 
     // verify the token
@@ -50,7 +51,7 @@ const usersCollection = db.collection("users");
 async function verifyAdmin(req, res, next) {
     const requester = req.decoded?.email;
     // console.log('your crush mail', requester);
-    // console.log(`requester `, requester);
+    console.log(`requester `, requester);
     const requesterInfo = await usersCollection.findOne({ email: requester })
     // console.log(`requesterInfo `, requesterInfo);
     const requesterRole = requesterInfo?.role;
@@ -58,7 +59,7 @@ async function verifyAdmin(req, res, next) {
     // if (requesterInfo?.role === 'admin') {
     //     return next();
     // }
-    if (!requesterInfo?.role === 'admin') {
+    if (requesterRole !== 'admin') {
         return res.status(401).send({
             message: `You are not admin`,
             status: 401
@@ -103,7 +104,7 @@ app.put("/user/:email", async (req, res) => {
 })
 
 // get all users
-app.get("/allusers",  async (req, res) => {
+app.get("/allusers", verifyToken, verifyAdmin, async (req, res) => {
     try {
         const user = await usersCollection.find({}).toArray();
         res.send(user)
@@ -154,8 +155,8 @@ app.get('/user/admin/:email', async (req, res) => {
 
 app.get('/', (req, res) => res.send({
     status: '200',
-    message: `Simple JWT Server!`,
-    version: '1.0.0',
+    message: `Simple Deployment session`,
+    version: '1.0.1',
     author: `@0nahid`,
 }))
 app.all('*', (req, res) => res.send({

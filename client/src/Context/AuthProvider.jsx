@@ -4,7 +4,13 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
     const [theme, setTheme] = useState(false);
-
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+    }, []);
     useEffect(() => {
         setTheme(JSON.parse(window.localStorage.getItem("theme") || "false"));
     }, [])
@@ -17,7 +23,8 @@ const AuthProvider = ({ children }) => {
     // value is the object that will be passed to the children
     const authInfo = {
         theme,
-        handleThemeChange
+        handleThemeChange,
+        loading
     }
 
     return (

@@ -7,7 +7,7 @@ const useAdmin = user => {
         const email = user?.email;
         console.log(`admin email`, email);
         if (email) {
-            axios.get(`http://localhost:5000/user/admin/${email}`, {
+            axios.get(`${process.env.REACT_APP_SERVER_URL}/user/admin/${email}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("accessToken")}`
                 }
