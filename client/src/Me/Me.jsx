@@ -10,7 +10,7 @@ export default function Portfolio() {
     const { theme, loading } = useContext(AuthContext);
     const [user] = useAuthState(auth);
     const [getUser, setGetUser] = useState('');
-    console.log(process.env.REACT_APP_SERVER_URL);
+    // console.log(process.env.REACT_APP_SERVER_URL);
     // console.log('me page user', user.email);
     let darkFont = theme ? 'text-info' : 'text-black';
     let socialIconStyle = theme ? `h-7 w-7 hover:text-info` : "h-7 w-7 hover:text-secondary";
@@ -22,12 +22,12 @@ export default function Portfolio() {
             }
         })
             .then(res => {
-                console.log(`user`, res?.data);
+                // console.log(`user`, res?.data);
                 setGetUser(res?.data?.data);
             })
     }, [user?.email])
 
-    console.log(getUser);
+    // console.log(getUser);
 
     if (loading || getUser.length === 0) {
         return <Loading />

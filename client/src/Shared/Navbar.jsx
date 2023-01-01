@@ -13,7 +13,7 @@ export default function Navbar() {
     const { handleThemeChange, theme } = useContext(AuthContext);
     const [user] = useAuthState(auth)
     const [admin] = useAdmin(user);
-    console.log('navbar', user?.auth?.currentUser?.photoURL);
+    // console.log('navbar', user?.auth?.currentUser?.photoURL);
     const Navmenu = (
         <>
             {
@@ -31,7 +31,7 @@ export default function Navbar() {
                             })
                             localStorage.removeItem('accessToken');
                         }).catch((error) => {
-                            console.log(error);
+                            // console.log(error);
                         });
                     }}
                 >Logout</button>

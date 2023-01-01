@@ -5,7 +5,7 @@ const useAdmin = user => {
     const [admin, setAdmin] = useState(false)
     useEffect(() => {
         const email = user?.email;
-        console.log(`admin email`, email);
+        // console.log(`admin email`, email);
         if (email) {
             axios.get(`${process.env.REACT_APP_SERVER_URL}/user/admin/${email}`, {
                 headers: {
@@ -13,7 +13,7 @@ const useAdmin = user => {
                 }
             })
                 .then(res => {
-                    console.log(`admin status`, res?.data);
+                    // console.log(`admin status`, res?.data);
                     setAdmin(res?.data?.isAdmin)
                 })
         }

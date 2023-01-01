@@ -51,11 +51,11 @@ const usersCollection = db.collection("users");
 async function verifyAdmin(req, res, next) {
     const requester = req.decoded?.email;
     // console.log('your crush mail', requester);
-    console.log(`requester `, requester);
+    // console.log(`requester `, requester);
     const requesterInfo = await usersCollection.findOne({ email: requester })
     // console.log(`requesterInfo `, requesterInfo);
     const requesterRole = requesterInfo?.role;
-    console.log(`requesterRole `, requesterRole);
+    // console.log(`requesterRole `, requesterRole);
     // if (requesterInfo?.role === 'admin') {
     //     return next();
     // }
@@ -99,7 +99,7 @@ app.put("/user/:email", async (req, res) => {
 
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
     }
 })
 
@@ -110,7 +110,7 @@ app.get("/allusers", verifyToken, verifyAdmin, async (req, res) => {
         res.send(user)
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
     }
 })
 
@@ -129,7 +129,7 @@ app.get("/user/:email", verifyToken, async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err)
+        // console.log(err)
     }
 })
 

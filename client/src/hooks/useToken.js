@@ -5,9 +5,9 @@ const useToken = (user) => {
     console.log('for generate token', user)
     useEffect(() => {
         const email = user?.email;
-        console.log('email', email)
+        // console.log('email', email)
         const uid = user?.uid;
-        console.log('uid', uid);
+        // console.log('uid', uid);
         const currentUser = {
             email: email,
             uid: uid

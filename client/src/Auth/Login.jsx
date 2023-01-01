@@ -12,9 +12,9 @@ import Loading from '../Shared/Loader';
 export default function Login() {
     const { theme } = useContext(AuthContext);
     const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
-    console.log(`google user`, gUser);
+    // console.log(`google user`, gUser);
     const [user] = useAuthState(auth);
-    console.log('after login', user);
+    // console.log('after login', user);
     const [token] = useToken(user);
     const navigate = useNavigate();
     const location = useLocation();
