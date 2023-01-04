@@ -5,7 +5,7 @@ import Navbar from '../Shared/Navbar';
 
 export default function Main() {
     const { theme } = useContext(AuthContext);
-    console.log(theme);
+    // console.log(theme);
     return (
         <div className={
             theme ? 'heroDarkPattern' : 'heroLightPattern'

@@ -5,15 +5,15 @@ const useToken = (user) => {
     console.log('for generate token', user)
     useEffect(() => {
         const email = user?.email;
-        console.log('email', email)
+        // console.log('email', email)
         const uid = user?.uid;
-        console.log('uid', uid);
+        // console.log('uid', uid);
         const currentUser = {
             email: email,
             uid: uid
         }
         if (email && uid) {
-            axios.put(`http://localhost:5000/user/${email}`, currentUser)
+            axios.put(`${process.env.REACT_APP_SERVER_URL}/user/${email}`, currentUser)
                 .then(res => {
                     // console.log(res?.data?.data);
                     const accessToken = res?.data?.data;

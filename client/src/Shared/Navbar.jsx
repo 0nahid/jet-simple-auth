@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { signOut } from "firebase/auth";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import auth from "../firebase.init";
@@ -11,24 +13,27 @@ export default function Navbar() {
     const { handleThemeChange, theme } = useContext(AuthContext);
     const [user] = useAuthState(auth)
     const [admin] = useAdmin(user);
-    console.log('navbar', user?.auth?.currentUser?.photoURL);
+    // console.log('navbar', user?.auth?.currentUser?.photoURL);
     const Navmenu = (
         <>
             {
                 user && <Link to="/me" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0 mr-2">Me</button></Link>
             }
             {
-                admin && <Link to="/users" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0 mr-2">Users</button></Link>
+                user && admin && <Link to="/users" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0 mr-2">Users</button></Link>
             }
             {
                 !user ? <Link to="/login" > <button className="btn  btn-outline ml-2 mb-2 md:mb-0">Login</button></Link> : <button className="btn btn-outline"
-                    onClick={
-                        () => auth.signOut()
-                            .then(() => {
-                                // remove user from local storage
-                                localStorage.removeItem('aceessToken')
+                    onClick={() => {
+                        signOut(auth).then(() => {
+                            toast.success(`Logged Out Successfully `, {
+                                autoClose: 4000,
                             })
-                    }
+                            localStorage.removeItem('accessToken');
+                        }).catch((error) => {
+                            // console.log(error);
+                        });
+                    }}
                 >Logout</button>
             }
 
@@ -39,7 +44,7 @@ export default function Navbar() {
         <div className="sticky top-0 z-40 backdrop-blur-2xl transition-colors duration-500">
             <div className="navbar container mx-auto">
                 <div className="navbar-start">
-                    <Link to="/" className="btn btn-ghost normal-case text-xl md:text-2xl"> JWT </Link>
+                    <Link to="/" className="btn btn-ghost normal-case text-xl md:text-2xl"> Deployent </Link>
                 </div>
                 <div className="navbar-end">
                     <button

@@ -3,29 +3,35 @@ import { useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ImFacebook2, ImGithub, ImLinkedin } from "react-icons/im";
 import { AuthContext } from "../Context/AuthProvider";
+import Loading from "../Shared/Loader";
 import auth from "../firebase.init";
 
 export default function Portfolio() {
-    const { theme } = useContext(AuthContext);
+    const { theme, loading } = useContext(AuthContext);
     const [user] = useAuthState(auth);
     const [getUser, setGetUser] = useState('');
+    // console.log(process.env.REACT_APP_SERVER_URL);
     // console.log('me page user', user.email);
     let darkFont = theme ? 'text-info' : 'text-black';
     let socialIconStyle = theme ? `h-7 w-7 hover:text-info` : "h-7 w-7 hover:text-secondary";
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/user/${user?.email}`, {
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/user/${user?.email}`, {
             headers: {
-                "authorizaion": `Bearer ${localStorage.getItem('accessToken')}`
+                "authorization": `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
             .then(res => {
-                console.log(`user`, res);
+                // console.log(`user`, res?.data);
                 setGetUser(res?.data?.data);
             })
     }, [user?.email])
 
-    console.log(getUser);
+    // console.log(getUser);
+
+    if (loading || getUser.length === 0) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -35,8 +41,10 @@ export default function Portfolio() {
                         <div className="avatar">
                             <div className="mx-auto w-32 md:w-48 mt-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={
-                                    user?.photoURL
-                                } alt="Nahid" />
+                                    user.photoURL
+                                } alt=
+                                    {user.displayName}
+                                />
                             </div>
                         </div>
                         <div className="mx-auto text-center mt-5 mb-6">
